@@ -180,7 +180,7 @@ def save_data(api_request, part):
         logger.debug(api_request.user_request.fields)
         logger.debug("BOOM")
         logger.debug(output_data)
-        logger("Ending")
+        logger.debug("Ending")
 
 
         clickhouse.save_data(api_request.user_request.source,
