@@ -41,6 +41,7 @@ def get_estimation(user_request):
     if r.status_code == 200:
         return json.loads(r.text)['log_request_evaluation']
     else:
+        logger.exception(r)
         raise ValueError(r)
 
 
