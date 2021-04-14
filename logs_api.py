@@ -164,16 +164,26 @@ def save_data(api_request, part):
     logger.info('### DATA SAMPLE')
     logger.info('\n'.join(splitted_text[:5]))
 
+    logger.info("headers")
     headers_num = len(splitted_text[0].split('\t'))
+    logger.info(headers_num)
+    logger.info("splitted")
     splitted_text_filtered = list(filter(lambda x: len(x.split('\t')) == headers_num, r.text.split('\n')))
+    logger.info(splitted_text_filtered)
     num_filtered = len(splitted_text) - len(splitted_text_filtered)
     if num_filtered != 0:
         logger.warning('%d rows were filtered out' % num_filtered)
     
     if len(splitted_text_filtered) > 1:
+        logger.info("IF")
         output_data = '\n'.join(splitted_text_filtered[1:]) #.encode('utf-8')
+        logger.info(output_data)
         output_data = '\t'.join(map(clickhouse.get_ch_field_name, splitted_text_filtered[0].split('\t'))) + '\n' + output_data # convert headers to CH column names
+        logger.info("second")
+        logger.info(output_data)
         output_data = output_data.replace(r"\'", "'") # to correct escapes in params
+        logger.info("third")
+        logger.info(output_data)
 
         logger.info(api_request.user_request.source)
         logger.info('WOOW')
