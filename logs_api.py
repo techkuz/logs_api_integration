@@ -175,12 +175,12 @@ def save_data(api_request, part):
         output_data = '\t'.join(map(clickhouse.get_ch_field_name, splitted_text_filtered[0].split('\t'))) + '\n' + output_data # convert headers to CH column names
         output_data = output_data.replace(r"\'", "'") # to correct escapes in params
 
-        logger.debug(api_request.user_request.source)
-        logger.debug('WOOW')
-        logger.debug(api_request.user_request.fields)
-        logger.debug("BOOM")
-        logger.debug(output_data)
-        logger.debug("Ending")
+        logger.info(api_request.user_request.source)
+        logger.info('WOOW')
+        logger.info(api_request.user_request.fields)
+        logger.info("BOOM")
+        logger.info(output_data)
+        logger.info("Ending")
 
 
         clickhouse.save_data(api_request.user_request.source,
