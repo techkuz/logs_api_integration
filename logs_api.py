@@ -42,6 +42,9 @@ def get_estimation(user_request):
         return json.loads(r.text)['log_request_evaluation']
     else:
         logger.exception(r)
+        logger.exception(vars(r))
+        logger.exception(r.text)
+        logger.exception(123)
         raise ValueError(r)
 
 
