@@ -155,6 +155,7 @@ def save_data(source, fields, data):
         create_table(source, fields)
     logger.info("TABLE NAME")
     logger.info(get_source_table_name(source))
+    logger.info(data)
     upload(get_source_table_name(source), data)
 
 
