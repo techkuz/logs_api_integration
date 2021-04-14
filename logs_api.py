@@ -41,11 +41,7 @@ def get_estimation(user_request):
     if r.status_code == 200:
         return json.loads(r.text)['log_request_evaluation']
     else:
-        logger.exception(r)
-        logger.exception(vars(r))
-        logger.exception(r.text)
-        logger.exception(123)
-        raise ValueError(r)
+        raise ValueError(r.text)
 
 
 def get_api_requests(user_request):
@@ -176,7 +172,7 @@ def save_data(api_request, part):
     
     if len(splitted_text_filtered) > 1:
         output_data = '\n'.join(splitted_text_filtered[1:]) #.encode('utf-8')
-        output_date = '\t'.join(map(clickhouse.get_ch_field_name, splitted_text_filtered[0].split('\t'))) + '\n' + output_data # convert headers to CH column names
+        output_data = '\t'.join(map(clickhouse.get_ch_field_name, splitted_text_filtered[0].split('\t'))) + '\n' + output_data # convert headers to CH column names
         output_data = output_data.replace(r"\'", "'") # to correct escapes in params
 
         clickhouse.save_data(api_request.user_request.source,
