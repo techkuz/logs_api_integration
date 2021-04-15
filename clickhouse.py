@@ -108,7 +108,7 @@ def drop_table(source):
 def create_table(source, fields):
     '''Creates table in ClickHouse for hits/visits with particular fields'''
     tmpl = '''
-        CREATE TABLE {table_name} (
+        CREATE TABLE {table_name} ON CLUSTER clickhouse1 (
             {fields}
         ) ENGINE = {engine}
     '''
@@ -155,7 +155,6 @@ def save_data(source, fields, data):
         create_table(source, fields)
     logger.info("TABLE NAME")
     logger.info(get_source_table_name(source))
-    logger.info(data)
     upload(get_source_table_name(source), data)
 
 
