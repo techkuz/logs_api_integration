@@ -103,8 +103,7 @@ def integrate_with_logs_api(config, user_request):
                 logs_api.clean_data(api_request)
         except Exception as e:
             logger.critical('Iteration #{i} failed'.format(i=i + 1))
-            logger.exception(repr(e);
-            # logger.exception(e.encode('ascii', 'ignore').decode('ascii'));
+            logger.exception(repr(e));
 
             if i == config['retries'] - 1:
                 raise e
