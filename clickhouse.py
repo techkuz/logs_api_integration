@@ -37,9 +37,13 @@ def get_clickhouse_data(query, host=CH_HOST):
 def upload(table, content, host=CH_HOST):
     '''Uploads data to table in ClickHous'''
     content = content.encode('utf-8')
+    logger.info("DEBUG")
+    logger.info(content[:10])
     query_dict = {
              'query': 'INSERT INTO ' + table + ' FORMAT TabSeparatedWithNames '
         }
+
+    host += '?input_format_allow_errors_ratio=1&input_format_allow_errors_num=9999999'
     if (CH_USER == '') and (CH_PASSWORD == ''):
         r = requests.post(host, data=content, params=query_dict, verify=SSL_VERIFY)
     else:
