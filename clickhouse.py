@@ -1,6 +1,8 @@
 from __future__ import (absolute_import, division,
                         print_function, unicode_literals)
 
+from datetime import datetime
+
 import requests
 import urllib
 import urllib3
@@ -37,13 +39,16 @@ def get_clickhouse_data(query, host=CH_HOST):
 def upload(table, content, host=CH_HOST):
     '''Uploads data to table in ClickHous'''
     content = content.encode('utf-8')
+    with open(str(datetime.now()), "w") as text_file:
+        text_file.write(content)
     logger.info("DEBUG")
     logger.info(content[:10])
     query_dict = {
-             'query': 'INSERT INTO ' + table + ' FORMAT TabSeparatedWithNames '
+             'query': 'INSERT INTO ' + table + ' FORMAT TabSeparatedWithNames ',
+             'input_format_allow_errors_num': 99999,
+             'input_format_allow_errors_ratio': 1
         }
 
-    host += '?input_format_allow_errors_ratio=1&input_format_allow_errors_num=9999999'
     if (CH_USER == '') and (CH_PASSWORD == ''):
         r = requests.post(host, data=content, params=query_dict, verify=SSL_VERIFY)
     else:
